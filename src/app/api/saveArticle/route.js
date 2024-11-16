@@ -1,4 +1,4 @@
-import { firestore } from "../../../../firebaseAdminConfig"; // Adjust path if necessary
+import { firestore } from "../../../../firebaseAdminConfig"; 
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
