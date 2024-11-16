@@ -67,7 +67,7 @@ export default function Page({ params }) {
                     Toggle Background
                 </button>
             </div>
-            <h1 style={{ fontSize: `${fontSize}px` }}>{article.title}</h1>
+            <h1 className={styles.title} style={{ fontSize: `${fontSize}px` }}>{article.title}</h1>
             <div
                 className={styles.content}
                 style={{ fontSize: `${fontSize}px` }}
