@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "firebase": "^11.0.2",
+    "firebase-admin": "^13.0.0",
     "marked": "^15.0.0",
     "next": "15.0.3",
     "openai": "^4.72.0",

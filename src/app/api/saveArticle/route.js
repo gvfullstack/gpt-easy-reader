@@ -1,5 +1,4 @@
-import { db } from "../../../../firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
+import { firestore } from "../../../../firebaseAdminConfig"; // Adjust path if necessary
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -17,14 +16,13 @@ export async function POST(request) {
             return NextResponse.json({ error: "Title and article content are required" }, { status: 400 });
         }
 
-        // Define a document reference in Firestore
-        const docRef = doc(db, "articles", title);
-
-        // Save the document to Firestore
-        await setDoc(docRef, { title, content: articleContent });
+        // Use Firebase Admin to save the document
+        const docRef = firestore.collection("articles").doc(title);
+        await docRef.set({ title, content: articleContent });
 
         return NextResponse.json({ success: true, message: "Article saved successfully" });
     } catch (error) {
+        console.error("Error saving article:", error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
