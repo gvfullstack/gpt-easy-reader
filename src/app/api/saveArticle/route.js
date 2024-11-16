@@ -1,28 +1,30 @@
-import { db } from "../../../../firebaseConfig"; // Adjust the path if your config file is in a different location
+import { db } from "../../../../firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
-// Handler for POST request
 export async function POST(request) {
     try {
-        // Parse the request body to get title and articleContent
+        // Validate API Key
+        const apiKey = request.headers.get("x-api-key");
+        if (apiKey !== process.env.API_KEY) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        // Parse the request body
         const { title, articleContent } = await request.json();
-        
-        // Ensure both title and content are provided
+
         if (!title || !articleContent) {
             return NextResponse.json({ error: "Title and article content are required" }, { status: 400 });
         }
 
-        // Define a document reference in Firestore using the title as a unique identifier
-        const docRef = doc(db, "articles", title); // 'articles' is the collection name, title is the document ID
+        // Define a document reference in Firestore
+        const docRef = doc(db, "articles", title);
 
         // Save the document to Firestore
         await setDoc(docRef, { title, content: articleContent });
 
-        // Send success response
         return NextResponse.json({ success: true, message: "Article saved successfully" });
     } catch (error) {
-        // Send error response if there's an issue
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
