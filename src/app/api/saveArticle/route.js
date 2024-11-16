@@ -1,4 +1,4 @@
-import { db } from "../../../firebaseConfig"; // Adjust the path if your config file is in a different location
+import { db } from "../../../../firebaseConfig"; // Adjust the path if your config file is in a different location
 import { doc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 

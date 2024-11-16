@@ -4,7 +4,7 @@ import { db } from "../../firebaseConfig"; // Adjust the path if necessary
 import { doc, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { marked } from "marked";
-import styles from "./routeStyles.module.css";
+import styles from "./pageStyles.module.css";
 
 export default function Page({ params }) {
     const { title } = params;
