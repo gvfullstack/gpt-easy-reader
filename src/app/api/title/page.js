@@ -1,6 +1,6 @@
 'use client';
 
-import { db } from "../../firebaseConfig"; // Adjust the path if necessary
+import { db } from "../../../../firebaseConfig"; // Adjust the path if necessary
 import { doc, getDoc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { marked } from "marked";
