@@ -2,12 +2,18 @@ import { db } from "../../../firebaseConfig"; // Adjust the path if necessary
 import { doc, getDoc } from "firebase/firestore";
 import ArticleRenderer from "./ArticleRenderer"; // Client Component
 
-export default async function Page({ params }) {
-    const { title } = params;
-
+export default async function Page({ params: promiseParams }) {
     try {
+        // Await the params promise
+        const params = await promiseParams;
+        const { docId } = params; // Expect the full document ID in the parameters
+
+        if (!docId) {
+            throw new Error("Document ID is required to fetch the article.");
+        }
+
         // Fetch article data from Firestore
-        const docRef = doc(db, "articles", title);
+        const docRef = doc(db, "articles", docId);
         const docSnap = await getDoc(docRef);
 
         if (!docSnap.exists()) {
@@ -31,4 +37,3 @@ export default async function Page({ params }) {
         );
     }
 }
-    
