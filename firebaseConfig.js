@@ -12,16 +12,20 @@ const firebaseConfig = {
     storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: "G-23J967XL2N"
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID, // Use environment variable for flexibility
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 // Conditionally initialize Analytics in the browser
-if (typeof window !== "undefined") {
-    const { getAnalytics } = require("firebase/analytics");
-    analytics = getAnalytics(app);
+if (typeof window !== "undefined" && firebaseConfig.measurementId) {
+    try {
+        const { getAnalytics } = require("firebase/analytics");
+        analytics = getAnalytics(app);
+    } catch (error) {
+        console.error("Firebase Analytics initialization failed:", error);
+    }
 }
 
 // Initialize Firestore
