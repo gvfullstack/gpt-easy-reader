@@ -25,7 +25,7 @@ export async function POST(request) {
         const docRef = firestore.collection("articles").doc(docId);
         await docRef.set({ title, content: articleContent });
 
-        return NextResponse.json({ success: true, message: "Article saved successfully", id: docId });
+        return NextResponse.json({ success: true, message: 'Article saved successfully.', id: docId, url: `https://gpt-easy-reader.vercel.app/${docId}`});
     } catch (error) {
         console.error("Error saving article:", error);
         return NextResponse.json({ error: error.message }, { status: 500 });
